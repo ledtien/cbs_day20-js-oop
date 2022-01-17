@@ -133,6 +133,19 @@ function resetSV() {
   saveLocalStorage(dssv);
 }
 
+function timSV() {
+  var tenSV = document.getElementById("txtSearch").value;
+  var searchArr = [];
+  for (i = 0; i < dssv.length; i++) {
+    var sv = dssv[i];
+    if (tenSV == sv.ten) {
+      searchArr.push(sv);
+    }
+  }
+  console.log(searchArr);
+  renderTableSV(searchArr);
+}
+
 var dssvJSON = localStorage.getItem(DSSV_LOCAL);
 var newDSSV = JSON.parse(dssvJSON);
 
