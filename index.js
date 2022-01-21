@@ -2,9 +2,29 @@ var dssv = [];
 var DSSV_LOCAL = "dssvLocalStorage";
 
 function kiemTraMaSV(newSV, arrSV) {
+  var checkNumber = new RegExp(/^\d+$/);
+
+  if (!checkNumber.test(newSV.ma)) {
+    return false;
+  }
   for (i = 0; i < arrSV.length; i++) {
     var currentSV = arrSV[i];
     if (newSV.ma == currentSV.ma) {
+      return false;
+    }
+  }
+  return true;
+}
+
+function checkEmailSV(newSV, arrSV) {
+  var checkEmail = new RegExp(/\S+@\S+\.\S+/);
+  // return checkEmail.test(sv.email);
+  if (!checkEmail.test(newSV.email)) {
+    return false;
+  }
+  for (i = 0; i < arrSV.length; i++) {
+    var currentSV = arrSV[i];
+    if (newSV.email == currentSV.email) {
       return false;
     }
   }
@@ -117,13 +137,12 @@ function xoaSV(maSV) {
 function themSV() {
   var sinhVien = layThongTinSV();
   let checkSV = kiemTraMaSV(sinhVien, dssv);
-  if (checkSV) {
+  var checkEmail = checkEmailSV(sinhVien, dssv);
+  var isValid = checkSV && checkEmail;
+  if (isValid) {
     dssv.push(sinhVien);
-    // var dssvJSON = JSON.stringify(dssv);
-    // localStorage.setItem(DSSV_LOCAL, dssvJSON);
     saveLocalStorage(dssv);
   }
-
   renderTableSV(dssv);
 }
 
